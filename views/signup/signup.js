@@ -19,7 +19,7 @@ form.addEventListener("DOMContentLoaded", async(e) => {
             return;
         }
 
-    const newUser = { name: name, email: email, phone: phone, password: password }
+    const newUser = { name: name, email: email, phone: phone, password: password };
     
     const response = await axios.post('http://localhost:3000', newUser)
 
@@ -31,7 +31,12 @@ form.addEventListener("DOMContentLoaded", async(e) => {
     }
     } 
     catch(error) {
-        console.error('Error:', error);
-        alert('An error occurred during signup.');
+        if(error.response.status === 400) {
+            alert('User already exists');
+        }
+        else {
+            console.error('Error:', error);
+            alert('An error occurred during signup.');
+        }
     }
 });

@@ -1,62 +1,65 @@
 const User = require('../models/user');
 
-const becrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
-function isstringinvalid(stribg) {
-    if(string === undefined || string.length === 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
+// function isStringInvalid(string) {
+//     if(string === undefined || string.length === 0) {
+//         return true;
+//     }else {
+//         return false;
+//     }
+// }
 
 exports.signup = async (req, res, next) => {
     try {
         const { name, email, phone, password } = req.body;
-        console.log('email', email);
-        if(isstringinvalid(name) || isstringinvalid(email) || isstringinvalid(phone) || isstringinvalid(password)) {
-            return res.status(400).json({error: "Bad parameters Something is missing"})
+        // if(isStringInvalid(name) || isStringInvalid(email) || isStringInvalid(phone) || isStringInvalid(password)) {
+        //     return res.status(400).json({error: "Bad parameters Something is missing"});
+        // } 
+        const oldUser = await User.findOne({
+            email : email
+        })
+        if(oldUser) {
+            res.status(404).json({ message: "User Already Exists!"});
+        }
+        else {
+            bcrypt.hash(password, saltRounds, async (err, hash) => {
+                if(err) {
+                    return res.status(500).json({ error: "Error hashing password"});
+                }
+                await User.create({ name, email, phone, password: hash });
+                res.status(201).json({message: "Sucessfully created new user"});
+            })
         } 
-
-        const saltRounds = 10;
-        becrypt.hash(password, saltRounds, async(err, hash) => {
-            console.log(err);
-            await User.create({ name, email, phone, password: hash })
-            res.status(201).json({message: "Sucessfully created new user"});
-        })  
-    }
-    catch(err) {
+    } catch(err) {
+        console.error(err);
         res.status(500).json(err);
     }
 }
 
-exports.Login = async (req,res,next) => {
+exports.login = async (req,res,next) => {
     try{
         const { email, password } = req.body;
-        if(isstringinvalid(email) || isstringinvalid(password)) {
-            return res.status(400).json({message: "Email id password is missing", success:false})
-        } 
-        console.log(password);
-        const user = await User.findAll({where:{ email : email } })
-        if(user.length> 0){
-            becrypt.compare(password, user[0].password, (err, result) => {
-                if(err) {
-                    res.status(500).json({ success: false, message: 'Something went wrong' })
-                }
-                if(result === true){
-                    res.status(200).json({success: true, message: "User logged in successfully"})
+        // if(isStringInvalid(email) || isStringInvalid(password)) {
+        //     return res.status(400).json({message: "Email id or password is missing", success:false});
+        // } 
+        const user = await User.findOne({where:{ email : email } })
+        if(!user) {
+            res.status(404).json({message : "User Not Found !!!"})
+        }
+        else {
+            bcrypt.compare(password, user.password, (err, result) => {
+                if(result){
+                    res.status(200).json({success: true, message: "User logged in successfully"});
                 }
                 else{
-                    res.status(404).json({success: false, message : "Password is incorrect"})
+                    res.status(401).json({success: false, message : "Password is incorrect"});
                 }
             })
-        }
-        else{
-            res.status(404).json({success: false, message : "User doesn't exists"})
-        }
+        }   
     }
     catch(err){
-        res.status(500).json({message : err, success: false})   
+        res.status(500).json({message : err, success: false});
     }
 }

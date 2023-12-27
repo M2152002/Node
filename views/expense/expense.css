@@ -1,0 +1,79 @@
+body {
+    background-color: #f8f8f8;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-size: 38px;
+    color: #d3f7f8;
+    margin-bottom: 25px;
+}
+
+.container {
+    max-width: 800px;
+    background-color: white;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    border: 2px solid #fcfcff;
+    padding: 1.5rem;
+    border-radius: 4px;
+    background-color: #d3f7f8;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#submit {
+    border-radius: 4px;
+    width: 100%;
+    background-color: #d1f5f1;
+    color: black;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: #929f9d;
+}
+
+.main {
+    margin-top: 20px;
+}
+
+#expense-list {
+    list-style: none;
+    padding: 0;
+}
+
+.expense-item {
+    background-color: #d3f7f8;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.expense-item button {
+    background-color: #ff7575;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.delete {
+    border-radius: 4px;
+    width: 20%;
+    background-color: #f2beb8;
+    color: black;
+    cursor: pointer;
+}
+
+.delete:hover {
+    background-color: #f16d4f;
+}

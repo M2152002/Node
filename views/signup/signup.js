@@ -5,25 +5,25 @@ const Email = document.getElementById('email');
 const Phone = document.getElementById('phone');
 const Password = document.getElementById('password');
 
-form.addEventListener("DOMContentLoaded", async(e) => {
-    e.preventDefault();
-
+// form.addEventListener("DOMContentLoaded", () => {
+    form.addEventListener("submit", async(e) =>{
+        e.preventDefault();
+    try {
     const name = Name.value;        
     const email = Email.value;
     const phone = Phone.value;
     const password = Password.value;
 
-    try {
-        if (!name || !email || !phone || !password) {
-            alert('Please fill in all the fields');
-            return;
-        }
+    if (!name || !email || !phone || !password) {
+        alert('Please fill in all the fields');
+        return;
+    }
 
     const newUser = { name: name, email: email, phone: phone, password: password };
     
-    const response = await axios.post('http://localhost:3000', newUser)
+    const response = await axios.post('http://localhost:3000/user/signup', newUser)
 
-    if(response.status === 200) {
+    if(response.status === 201) {
         alert('Signup successful!');
     }
      else {
@@ -40,3 +40,4 @@ form.addEventListener("DOMContentLoaded", async(e) => {
         }
     }
 });
+// })

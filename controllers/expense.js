@@ -1,14 +1,15 @@
 const Expense = require('../models/expense');
+const User = require('../models/user');
 
 exports.addExpense = async (req, res, next) => {
     try {
         const { amount, description, category } = req.body;
 
-        if(amount == undefined || amount.length === 0) {
+        if (!amount || !description || !category) {
             return res.status(400).json({ success: false, expense: 'Parameters missing'})
         }
-
-        const newExpense = await Expense.create({ amount, description, category });
+        const userId = req.user.id;
+        const newExpense = await Expense.create({ amount, description, category, userId});
         res.status(201).json({ success: true, expense: newExpense });
     } catch (err) {
         console.error(err);
@@ -30,18 +31,19 @@ exports.getExpenses  = async (req, res, next) => {
 exports.deleteExpense = async (req, res, next) => {
     try {
         const expenseId = req.params.expenseId;
-
-        if(expenseId == undefined || expenseId.length === 0) {
-            return res.status(400).json({ success: false})
+        const userID = req.user.id; 
+        if (expenseId == undefined || expenseId.length === 0) {
+            return res.status(400).json({ success: false });
         }
-        const result = await Expense.destroy({ where: { id: expenseId } });
 
-        if (result === 1) {
-            res.status(200).json({ success: true, message: 'Expense deleted successfully' });
-        } else {
-            res.status(404).json({ success: false, message: 'Expense not found' });
+        const expense = await Expense.findByPk(expenseId);
+        if (!expense || expense.userId !== userID) {
+            return res.status(401).json({ success: false, message: 'Unauthorized to delete this expense' });
         }
-    } catch (err) {
+
+        await Expense.destroy({ where: { id: expenseId } });
+    }
+     catch (err) {
         console.error(err);
         res.status(500).json({ success: false, error: err.message });
     }

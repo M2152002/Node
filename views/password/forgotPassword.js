@@ -1,28 +1,42 @@
-const form = document.getElementById('form');
+// const Email = document.getElementById('email');
+// function forgotpassword(e) {
+//     e.preventDefault();
+//     console.log(e.target.name);
+//     const form = new FormData(e.target);
 
-const Email = document.getElementById('email');
+//     const userDetails = {
+//         email: form.get("email"),
 
-form.addEventListener("DOMContentLoaded", async(e) => {
+//     }
+//     console.log(userDetails)
+//     axios.post('http://localhost:3000/password/forgotpassword',userDetails).then(response => {
+//         if(response.status === 202){
+//             document.body.innerHTML += '<div style="color:red;">Mail Successfuly sent <div>'
+//         } else {
+//             throw new Error('Something went wrong!!!')
+//         }
+//     }).catch(err => {
+//         document.body.innerHTML += `<div style="color:red;">${err} <div>`;
+//     })
+// }
+
+function forgotpassword(e) {
     e.preventDefault();
+    console.log(e.target.name);
+    const form = new FormData(e.target);
 
-    const email = Email.value;
+    const userDetails = {
+        email: form.get("email"),
 
-    try {
-        if (!email) {
-            alert('Please fill in all the fields');
-            return;
-        }
-        const response = await axios.post('http://localhost:3000/password/forgotPassword', {
-            email: email,
-        });
-
-        if (response.status === 200) {
-            alert('Password reset initiated! Check your email for further instructions.');
-        } else {
-            alert('Password reset failed. Please check your email and try again.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred during the password reset process.');
     }
-});
+    console.log(userDetails)
+    axios.post('http://localhost:3000/password/forgotpassword',userDetails).then(response => {
+        if(response.status === 202){
+            document.body.innerHTML += '<div style="color:red;">Mail Successfuly sent <div>'
+        } else {
+            throw new Error('Something went wrong!!!')
+        }
+    }).catch(err => {
+        document.body.innerHTML += `<div style="color:red;">${err} <div>`;
+    })
+}

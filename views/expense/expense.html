@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./expense.css">
 </head>
-<body> 
+<body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #d3f7f8;">
             <div class="container-fluid my-auto">
@@ -24,13 +24,7 @@
                         <a class="nav-link" aria-current="page" id = "signup" href="../signup/signup.html">Sign Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="../pricing/pricing.html">Pricing</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="../report/report.html">Report</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="../leaderboard/leaderboard.html">Leaderboard</a>
                     </li>
                 </ul>
               </div>
@@ -38,45 +32,44 @@
           </nav>
     </header>
     
-    <section class="main"> 
-        <form id="form">
+    <section class="main">
+        <form onsubmit="addExpense(event)">
             <div class="container">
-                <div>
-                    <label for="amount">Amount:</label>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount:</label>
                     <input type="text" class="form-control" id="amount" placeholder="Enter expense amount" required>
                 </div>
-                <div>
-                    <label for="description">Description:</label>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
                     <input type="text" class="form-control" id="description" placeholder="Enter Description" required>
                 </div>
                 <div class="mb-3">
-                    <label for="category">Category:</label>
-                    <select class="form-select" id="category" placeholder="Select a Category" required>
-                            <option value="food">Food</option>
-                            <option value="Travel">Travel</option>
-                            <option value="Health">Health</option>
-                            <option value="Fashion">Fashion</option>
-                            <option value="Education">Education</option>
+                    <label for="category" class="form-label">Category:</label>
+                    <select class="form-select" id="category" required>
+                        <option value="food">Food</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Health">Health</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Education">Education</option>
+                        <option value="Fuel">Fuel</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Movie">Movie</option>
                     </select>
                 </div>
-                <input id = "expenseId" type="hidden">
-                <button type="submit" class="btn" id = "submit">Submit</button>           
-             </form>
-            </section>
-            </div>
+                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
             </form>
-            <ul id="expense-list"></ul>
-            <!-- <ul class="items">
-                <li class="item">Item 1</li>
-                <li class="item">Item 2</li>
-                <li class="item">Item 3</li>
-            </ul> -->
-        </section>
+            <div id="message"></div>
+                <input type="hidden" id="expenseId">
+                <button id="rzp-button" class="rzp-button">Buy Premium</button> 
+                <h1 style="color: black;"> EXPENSE </h1>
+                <ul id="expense-list"></ul> 
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="./expense.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
+                <ul id="leaderboard"></ul>
+            </section>
+    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="./expense.js"></script>
 </body>
 </html>

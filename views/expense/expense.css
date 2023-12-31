@@ -44,36 +44,31 @@ form {
 }
 
 #expense-list {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-.expense-item {
-    background-color: #d3f7f8;
-    border-radius: 4px;
+#expense-list li {
+    background-color: #dbe6e6;
+    border: 1px solid #f3f6f7;
+    margin-bottom: 5px;
     padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-.expense-item button {
-    background-color: #ff7575;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+#expense-list li:hover {
+    background-color: #cccfcf;
 }
-
 
 .delete {
-    border-radius: 4px;
+    border: none;
     width: 20%;
     background-color: #f2beb8;
     color: black;
     cursor: pointer;
+    border-radius: 4px; 
 }
 
 .delete:hover {
-    background-color: #f16d4f;
+    background-color: #f18c75;
 }

@@ -1,35 +1,20 @@
-const form = document.getElementById('form');
+function login(e) {
+    e.preventDefault();
+    console.log(e.target.name);
 
-const Email = document.getElementById('email');
-const Password = document.getElementById('password');
+    const loginDetails = {
+        email: e.target.email.value,
+        password: e.target.password.value
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-    try {
-    const email = Email.value;
-    const password = Password.value;
-
-        if (!email || !password) {
-            alert('Please fill in all the fields');
-            return;
-        }
-
-    const User = { email: email, password: password };
-    
-    const response = await axios.post('http://localhost:3000/user/login', User)
-
-    if(response.status === 200) {
-        alert('Login successful!');
-        const UserData = { email: email };
-        localStorage.setItem('UserData', JSON.stringify(UserData));
-    
+    }
+    console.log(loginDetails)
+    axios.post('http://localhost:3000/user/login',loginDetails).then(response => {
+        alert(response.data.message)
+        console.log(response.data)
+        localStorage.setItem('token', response.data.token)
         window.location.href ='../expense/expense.html';
-    }
-     else {
-        alert('Login failed. Incorrect email or password.');    }
-    } 
-    catch(error) {
-        console.error('Error:', error);
-        alert('An error occurred during login.');
-    }
-});
+    }).catch(err => {
+        console.log(JSON.stringify(err))
+        document.body.innerHTML += `<div style="color:red;">${err.message} <div>`;
+    })
+}

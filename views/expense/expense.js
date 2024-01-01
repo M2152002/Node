@@ -106,6 +106,24 @@ function removeExpensefromUI(expenseId) {
     document.getElementById(expenseElemId).remove();
 }
 
+function download(){
+    axios.get('http://3.84.55.5:3000/user/download', { headers: {"Authorization" : token} })
+    .then((response) => {
+        if(response.status === 201){
+            var a = document.createElement("a");
+            a.href = response.data.fileUrl;
+            a.download = 'myexpense.csv';
+            a.click();
+        } else {
+            throw new Error(response.data.message)
+        }
+
+    })
+    .catch((err) => {
+        showError(err)
+    });
+}
+
 document.getElementById('rzp-button').onclick = async () => {
     const token = localStorage.getItem('token');
     const response  = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: {"Authorization" : token} });

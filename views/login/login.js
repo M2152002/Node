@@ -5,8 +5,8 @@ function login(e) {
     const loginDetails = {
         email: e.target.email.value,
         password: e.target.password.value
-
     }
+
     console.log(loginDetails)
     axios.post('http://localhost:3000/user/login',loginDetails).then(response => {
         alert(response.data.message)
@@ -17,4 +17,8 @@ function login(e) {
         console.log(JSON.stringify(err))
         document.body.innerHTML += `<div style="color:red;">${err.message} <div>`;
     })
+}
+
+function forgotpassword() {
+    window.location.href = "../password/forgotPassword.html";
 }
